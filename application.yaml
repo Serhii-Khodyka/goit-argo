@@ -15,6 +15,22 @@ spec:
       values: |
         replicaCount: 1
 
+        service:
+          type: ClusterIP
+          port: 5000
+
+        livenessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+        readinessProbe:
+          tcpSocket:
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
         resources:
           limits:
             cpu: 300m
@@ -22,10 +38,6 @@ spec:
           requests:
             cpu: 100m
             memory: 256Mi
-
-        service:
-          type: ClusterIP
-          port: 5000
 
         ingress:
           enabled: false
