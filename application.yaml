@@ -9,15 +9,29 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: nginx
-    targetRevision: 13.2.22
+    targetRevision: 15.12.0
 
     helm:
       values: |
         replicaCount: 1
 
+        image:
+          registry: registry.bitnami.com
+          repository: bitnami/nginx
+          tag: "1.27.2-debian-12-r3"
+          pullPolicy: IfNotPresent
+
         service:
           type: ClusterIP
           port: 80
+
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
 
   destination:
     server: https://kubernetes.default.svc
