@@ -28,7 +28,7 @@ spec:
             memory: 128Mi
 
   destination:
-    server: https://kubernetes.default.ssvc
+    server: https://kubernetes.default.svc
     namespace: application
 
   syncPolicy:
