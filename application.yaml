@@ -19,17 +19,18 @@ spec:
           type: ClusterIP
           port: 5000
 
-        livenessProbe:
-          tcpSocket:
-            port: 5000
-          initialDelaySeconds: 10
-          periodSeconds: 10
+        server:
+          livenessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
 
-        readinessProbe:
-          tcpSocket:
-            port: 5000
-          initialDelaySeconds: 5
-          periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
 
         resources:
           limits:
