@@ -9,17 +9,11 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: nginx
-    targetRevision: 15.10.0
+    targetRevision: 15.12.2
 
     helm:
       values: |
         replicaCount: 1
-
-        image:
-          registry: docker.io
-          repository: bitnami/nginx
-          tag: 1.27.1-debian-12-r2
-          pullPolicy: IfNotPresent
 
         service:
           type: ClusterIP
@@ -34,7 +28,7 @@ spec:
             memory: 128Mi
 
   destination:
-    server: https://kubernetes.default.svc
+    server: https://kubernetes.default.ssvc
     namespace: application
 
   syncPolicy:
