@@ -1,47 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mlflow-app
+  name: nginx-app
   namespace: infra-tools
 spec:
   project: default
 
   source:
-    repoURL: https://community-charts.github.io/helm-charts
-    chart: mlflow
-    targetRevision: 1.8.0
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: nginx
+    targetRevision: 15.10.0
 
     helm:
       values: |
-        replicaCount: 1
-
         service:
           type: ClusterIP
-          port: 5000
-
-        server:
-          livenessProbe:
-            tcpSocket:
-              port: 5000
-            initialDelaySeconds: 10
-            periodSeconds: 10
-
-          readinessProbe:
-            tcpSocket:
-              port: 5000
-            initialDelaySeconds: 5
-            periodSeconds: 10
+        replicaCount: 1
 
         resources:
           limits:
-            cpu: 300m
-            memory: 512Mi
+            cpu: 200m
+            memory: 256Mi
           requests:
             cpu: 100m
-            memory: 256Mi
-
-        ingress:
-          enabled: false
+            memory: 128Mi
 
   destination:
     server: https://kubernetes.default.svc
