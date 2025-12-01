@@ -1,17 +1,36 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-app
-  namespace: infra-tools
+  name: mlflow-app
+  namespace: infra-tools          # де встановлено ArgoCD
 spec:
   project: default
+
   source:
-    repoURL: https://github.com/Serhii-Khodyka/goit-argo
-    path: namespaces/application
-    targetRevision: main
+    # 🔹 Helm-репозиторій з MLflow (ArtifactHub → community-charts)
+    repoURL: https://community-charts.github.io/helm-charts
+    chart: mlflow
+    targetRevision: 1.8.0         # будь-яка актуальна версія з ArtifactHub
+
+    helm:
+      values: |
+        replicaCount: 1
+
+        service:
+          type: ClusterIP
+
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+
   destination:
     server: https://kubernetes.default.svc
-    namespace: application
+    namespace: application        # куди деплоїмо MLflow
+
   syncPolicy:
     automated:
       prune: true
